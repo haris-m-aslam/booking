@@ -17,7 +17,7 @@ class ShowTimeController extends Controller
      */
     public function index()
     {
-        $showtimes = ShowTime::where('slot', '>=', now())->get();
+        $showtimes = ShowTime::where('slot', '>=', now())->orderBy('slot', 'asc')->get();
         return view('admin.showtimes.index', compact('showtimes'));
     }
 
@@ -106,7 +106,7 @@ class ShowTimeController extends Controller
     }
 
     public function pastShows(){
-        $showtimes = ShowTime::where('slot', '<', now())->get();
+        $showtimes = ShowTime::where('slot', '<', now())->orderBy('slot', 'desc')->get();
         return view('admin.showtimes.past', compact('showtimes'));
     }
 }

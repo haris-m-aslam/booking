@@ -91,7 +91,7 @@ class BookingController extends Controller
 
     public function stepOne(Request $request)
     {
-        $shows = ShowTime::where('slot', '>=', now())->get();
+        $shows = ShowTime::where('slot', '>=', now())->orderBy('slot', 'asc')->get();
         $show_id = $request->session()->get('show_id');
         return view('user.booking.create-step1', compact('show_id', 'shows'));
     }

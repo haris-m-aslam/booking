@@ -81,7 +81,7 @@
                 <div class="title m-b-md">
                     Welcome to {{ config('app.name', 'Star Cinema') }}
                 </div>
-                <p>Please login to view shows</p>
+                <p>Please login to book tickets</p>
             </div>
         </div>
     </body>
