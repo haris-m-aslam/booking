@@ -142,6 +142,7 @@ class BookingController extends Controller
             );
         }
         $request->session()->forget('show_id');
+        Session::flash('flash_booking_success', 'Your ticket has been successfully booked');
         return redirect(route('user.bookings'));
     }
 

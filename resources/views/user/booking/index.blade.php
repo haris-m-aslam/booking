@@ -6,6 +6,13 @@
         <a class="pull-right" href="{{route('user.booking.step1')}}">Book Ticket</a>
     </div>
 </div>
+<div class="row">
+    <div class="col-sm-12">
+            @if(Session::has('flash_booking_success'))
+                <div class="alert alert-success">{{ session('flash_booking_success') }}</div>
+            @endif
+    </div>
+</div>
 
 @if(count($bookings))
 <table class="table">
