@@ -32,11 +32,11 @@ class LoginController extends Controller
     }
 
     public function redirectTo(){
-        // if(Auth::user()->isAdmin()){
-            return redirect(route('bookings.index'));
-        // }
-        // else{
-        //     return redirect(route('user.bookings'));
-        // }
+        if(Auth::user()->isAdmin()){
+            return route('show-times.index');
+        }
+        else{
+            return route('user.bookings');
+        }
     }
 }

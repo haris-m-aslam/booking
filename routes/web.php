@@ -24,6 +24,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('admin/films', 'FilmController');
     Route::resource('admin/show-times', 'ShowTimeController');
     Route::resource('admin/bookings', 'BookingController');
+    Route::get('show-times/{showTime}/bookings', 'ShowTimeController@showBookings')->name('show.bookings');
+    Route::get('show-times/history', 'ShowTimeController@pastShows')->name('past.shows');
 });
 
 Route::group(['middleware' => 'auth'], function () {

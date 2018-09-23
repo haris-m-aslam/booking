@@ -91,7 +91,7 @@ class BookingController extends Controller
 
     public function stepOne(Request $request)
     {
-        $shows = ShowTime::all();
+        $shows = ShowTime::where('slot', '>=', now())->get();
         $show_id = $request->session()->get('show_id');
         return view('user.booking.create-step1', compact('show_id', 'shows'));
     }
@@ -117,7 +117,7 @@ class BookingController extends Controller
         $bookings = Booking::where('slot_id', $show_id)->pluck('seat_id')->all();
         return view('user.booking.create-step2', compact('show_id', 'seats', 'bookings'));
     }
-    
+
     public function postStepTwo(Request $request)
     {
         $rules = [
@@ -125,12 +125,11 @@ class BookingController extends Controller
         ];
         $validatedData = $request->validate($rules);
 
-        echo $show_id = $request->session()->get('show_id');
+        $show_id = $request->session()->get('show_id');
         $seats = $request->get('seat_id');
         foreach ($seats as $seat) {
-            $booked = Booking::where(['slot_id'=> $show_id, 'seat_id' => $seat])->get();
-            dump($booked);
-            if($booked->isNotEmpty()){
+            $booked = Booking::where(['slot_id' => $show_id, 'seat_id' => $seat])->get();
+            if ($booked->isNotEmpty()) {
                 Session::flash('flash_error_msg', 'Seat already booked');
                 return redirect(route('user.booking.step2'));
             }
@@ -148,7 +147,10 @@ class BookingController extends Controller
 
     public function userBookings()
     {
-        $bookings = Booking::where('user_id', Auth::id())->get();
+        $bookings = Booking::whereHas('show', function ($q) {
+            $q->where('slot', '>=', now());
+        })->where('user_id', Auth::id())->get();
+
         return view('user.booking.index', compact('bookings'));
     }
 }

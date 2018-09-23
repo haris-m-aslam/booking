@@ -2,13 +2,14 @@
 @section('content')
 <h1>
     Book a movie</h1>
+    @include('includes.form_error')
+@if($shows) 
 <h4>
     Select show
 </h4>
-    @include('includes.form_error')
 <form method="post" action="{{ route('user.post.booking.step1') }}">
-    {{ csrf_field() }} @if($shows) @foreach($shows as $show)
-    <div class="container">
+    {{ csrf_field() }} @foreach($shows as $show)
+    <div class="container" style="margin-bottom: 20px;">
         <div class="row">
             <div class="col-sm-4">
             <label for="slot_id_{{$show->id}}">{{date('d-m-Y h:i a', strtotime($show->slot))}}</label>
@@ -22,9 +23,12 @@
             </div>
         </div>
     </div>
-    @endforeach @endif
+    @endforeach
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Continue</button>
     </div>
 </form>
+@else   
+    <h4>No Shows</h4>
+@endif
 @endsection

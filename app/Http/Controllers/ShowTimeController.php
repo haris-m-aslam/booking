@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\ShowTime;
 use Illuminate\Http\Request;
 use App\Film;
+use App\Booking;
+use App\Seat;
 
 class ShowTimeController extends Controller
 {
@@ -15,7 +17,7 @@ class ShowTimeController extends Controller
      */
     public function index()
     {
-        $showtimes = ShowTime::all();
+        $showtimes = ShowTime::where('slot', '>=', now())->get();
         return view('admin.showtimes.index', compact('showtimes'));
     }
 
@@ -91,5 +93,20 @@ class ShowTimeController extends Controller
     public function destroy(ShowTime $showTime)
     {
         //
+    }
+
+    public function showBookings(ShowTime $showTime){
+        // $bookings = Booking::where('slot_id', $id)->get();
+        // $showTime = ShowTime::find($id);
+        $totalSeats = Seat::get()->count();
+        $film = $showTime->film;
+        $bookings = $showTime->bookings;
+        $timing = $showTime->slot;
+        return view('admin.showtimes.bookings', compact('bookings', 'timing', 'totalSeats'));
+    }
+
+    public function pastShows(){
+        $showtimes = ShowTime::where('slot', '<', now())->get();
+        return view('admin.showtimes.past', compact('showtimes'));
     }
 }

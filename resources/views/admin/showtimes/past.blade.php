@@ -1,7 +1,6 @@
 @extends('layouts.admin') 
 @section('content')
-<h1 class="pull-left">Show Times</h1>
-<a class="pull-right" href="{{route('show-times.create')}}">Add Show Time</a>
+<h1 class="pull-left">Past Show Times</h1>
 <table class="table">
     <thead>
         <tr>

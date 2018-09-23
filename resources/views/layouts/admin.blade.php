@@ -46,8 +46,8 @@
                         <!-- Authentication Links -->
                         <li><a href="{{ route('seats.index') }}">Seats</a></li>
                         <li><a href="{{ route('films.index') }}">Movies</a></li>
-                        <li><a href="{{ route('show-times.index') }}">Shows</a></li>
-                        <li><a href="{{ route('bookings.index') }}">Bookings</a></li>
+                        <li><a href="{{ route('show-times.index') }}">Upcoming Shows</a></li>
+                        <li><a href="{{ route('past.shows') }}">Past Shows</a></li>
                         @guest
                         <li><a href="{{ route('login') }}">Login</a></li>
                         <li><a href="{{ route('register') }}">Register</a></li>

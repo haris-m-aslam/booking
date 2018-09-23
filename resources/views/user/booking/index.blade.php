@@ -1,6 +1,13 @@
 @extends('layouts.user') 
 @section('content')
-<h1 class="pull-left">My Bookings</h1>
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="pull-left">My Bookings</h1>
+        <a class="pull-right" href="{{route('user.booking.step1')}}">Book Ticket</a>
+    </div>
+</div>
+
+@if(count($bookings))
 <table class="table">
     <thead>
         <tr>
@@ -8,19 +15,18 @@
             <th>
                 Seat
             </th>
-            <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody>
-        @if($bookings) @foreach($bookings as $booking)
+        @foreach($bookings as $booking)
         <tr>
-        <td>{{$booking->slot_id}}</td>
-        <td>{{$booking->seat_id}}</td>
-        <td>{{$booking->user_id}}</td>
-            {{-- <td>{{date('d-m-Y h:i a', strtotime($booking->slot_id))}}</td> --}}
-            {{-- <td>{{$show->film->name}}</td> --}}
+            <td>{{date('d-m-Y h:i a', strtotime($booking->show->slot))}}</td>
+            <td>{{$booking->seat->name}}</td>
         </tr>
-        @endforeach @endif
+        @endforeach
     </tbody>
 </table>
+@else
+    <p>No bookings</p>
+@endif
 @endsection

@@ -13,6 +13,10 @@ class ShowTime extends Model
     protected $fillable = ['slot', 'film_id'];
 
     public function film(){
-        return $this->belongsTo(Film::class);
+        return $this->belongsTo('App\Film');
+    }
+
+    public function bookings(){
+        return $this->hasMany('App\Booking', 'slot_id');
     }
 }
