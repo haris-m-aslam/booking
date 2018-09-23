@@ -5,10 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Seat extends Model
+class Booking extends Model
 {
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    protected $fillable = ['name'];
+    protected $fillable = ['user_id', 'seat_id', 'slot_id'];
 }

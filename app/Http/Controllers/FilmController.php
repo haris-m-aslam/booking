@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Seat;
+use App\Film;
 use Illuminate\Http\Request;
 
-class SeatController extends Controller
+class FilmController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class SeatController extends Controller
      */
     public function index()
     {
-        $seats = Seat::all();
-        return view('admin.seats.index', compact('seats'));
+        $films = Film::all();
+        return view('admin.films.index', compact('films'));
     }
 
     /**
@@ -25,7 +25,7 @@ class SeatController extends Controller
      */
     public function create()
     {
-        return view('admin.seats.create');
+        return view('admin.films.create');
     }
 
     /**
@@ -38,20 +38,27 @@ class SeatController extends Controller
     {
         $rules = [
             'name' => 'required|max:255',
+            'description' => 'required',
         ];
         $request->validate($rules);
 
-        Seat::create($request->all());
-        return redirect(route('seats.index'));
+        $input = $request->all();
+        if ($file = $request->file('image')) {
+            $name = time() . $file->getClientOriginalName();
+            $file->move('films', $name);
+            $input['image'] = $name;
+        }
+        Film::create($input);
+        return redirect(route('films.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Seat  $seat
+     * @param  \App\Film  $film
      * @return \Illuminate\Http\Response
      */
-    public function show(Seat $seat)
+    public function show(Film $film)
     {
         //
     }
@@ -59,10 +66,10 @@ class SeatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Seat  $seat
+     * @param  \App\Film  $film
      * @return \Illuminate\Http\Response
      */
-    public function edit(Seat $seat)
+    public function edit(Film $film)
     {
         //
     }
@@ -71,10 +78,10 @@ class SeatController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Seat  $seat
+     * @param  \App\Film  $film
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seat $seat)
+    public function update(Request $request, Film $film)
     {
         //
     }
@@ -82,10 +89,10 @@ class SeatController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Seat  $seat
+     * @param  \App\Film  $film
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seat $seat)
+    public function destroy(Film $film)
     {
         //
     }

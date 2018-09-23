@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSeatsTable extends Migration
+class CreateShowTimesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateSeatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('seats', function (Blueprint $table) {
+        Schema::create('show_times', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');            
+            $table->dateTime('slot');
+            $table->integer('film_id')->unsigned()->index();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('film_id')->references('id')->on('films');
         });
     }
 
@@ -28,6 +30,6 @@ class CreateSeatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seats');
+        Schema::dropIfExists('show_times');
     }
 }

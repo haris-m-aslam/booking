@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Seat;
+use App\ShowTime;
 use Illuminate\Http\Request;
+use App\Film;
 
-class SeatController extends Controller
+class ShowTimeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class SeatController extends Controller
      */
     public function index()
     {
-        $seats = Seat::all();
-        return view('admin.seats.index', compact('seats'));
+        $showtimes = ShowTime::all();
+        return view('admin.showtimes.index', compact('showtimes'));
     }
 
     /**
@@ -25,7 +26,8 @@ class SeatController extends Controller
      */
     public function create()
     {
-        return view('admin.seats.create');
+        $movies = Film::all();
+        return view('admin.showtimes.create', compact('movies'));
     }
 
     /**
@@ -37,21 +39,22 @@ class SeatController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|max:255',
+            'slot' => 'bail|required|date_format:"Y-m-d H:i:s"|unique:show_times',
+            'film_id' => 'exists:films,id',
         ];
         $request->validate($rules);
 
-        Seat::create($request->all());
-        return redirect(route('seats.index'));
+        ShowTime::create($request->all());
+        return redirect(route('show-times.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Seat  $seat
+     * @param  \App\ShowTime  $showTime
      * @return \Illuminate\Http\Response
      */
-    public function show(Seat $seat)
+    public function show(ShowTime $showTime)
     {
         //
     }
@@ -59,10 +62,10 @@ class SeatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Seat  $seat
+     * @param  \App\ShowTime  $showTime
      * @return \Illuminate\Http\Response
      */
-    public function edit(Seat $seat)
+    public function edit(ShowTime $showTime)
     {
         //
     }
@@ -71,10 +74,10 @@ class SeatController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Seat  $seat
+     * @param  \App\ShowTime  $showTime
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seat $seat)
+    public function update(Request $request, ShowTime $showTime)
     {
         //
     }
@@ -82,10 +85,10 @@ class SeatController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Seat  $seat
+     * @param  \App\ShowTime  $showTime
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seat $seat)
+    public function destroy(ShowTime $showTime)
     {
         //
     }
